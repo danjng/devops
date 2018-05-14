@@ -1,8 +1,29 @@
 version: '3'
 services:
-  web:
-    build: .
+  git:
+    image: gitlab/gitlab-ce
+    hostname: gitlab.local
+    volumes:
+      - etc-gitlab:/etc/gitlab
+      - var-opt-gitlab:/var/opt/gitlab
+      - var-log-gitlab:/var/log/gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        GITLAB_ROOT_PASSWORD 'Password123'
     ports:
-     - "5000:5000"
-  redis:
-    image: "redis:alpine"
+     - "80:80"
+     - "443:443"
+     - "22:22"
+  cicd:
+    image: jenkins/jenkins:lts
+    hostname: jenkins.local
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+volumes:
+  etc-gitlab:
+  var-opt-gitlab:
+  var-log-gitlab:
+  jenkins_home:
