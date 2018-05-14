@@ -9,7 +9,7 @@ services:
       - var-log-gitlab:/var/log/gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        GITLAB_ROOT_PASSWORD 'Password123'
+        gitlab_rails['GITLAB_ROOT_PASSWORD'] = "Password123"
     ports:
      - "80:80"
      - "443:443"
